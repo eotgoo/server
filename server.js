@@ -37,10 +37,10 @@ server.post("/signup", (req, res) => {
 });
 
 server.post("/signin", (req, res) => {
-  const { id, email, password } = req.body;
+  const { email, password } = req.body;
   const data = fs.readFileSync("users.json", "utf-8");
   const parsedData = JSON.parse(data);
-  const findUser = parsedData.users.find((user) => user.id === id);
+  const findUser = parsedData.users.find((user) => user.email === email);
   if (!findUser) {
     res.status(401).json({ message: "Ийм хэрэглэгч олдсонгүй" });
   }
