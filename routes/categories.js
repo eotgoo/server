@@ -6,13 +6,13 @@ const router = Router();
 
 router.post("/", (req, res) => {
   try {
-    const content = fs.readFileSync("categories.json", "utf-8");
+    const content = fs.readFileSync("./data/categories.json", "utf-8");
     console.log("Con", content);
     const data = JSON.parse(content);
     console.log("Data", data.categories);
     const newData = { ...req.body };
     data.categories.push(newData);
-    fs.writeFileSync("categories.json", JSON.stringify(data));
+    fs.writeFileSync("./data/categories.json", JSON.stringify(data));
     res.status(201).json({ message: "Амжилттай үүсгэлээ.", data: newData });
   } catch (err) {
     return res.status(400).json({ message: err.message });
@@ -21,7 +21,7 @@ router.post("/", (req, res) => {
 
 router.get("/", (req, res) => {
   try {
-    const categoriesData = fs.readFileSync("categories.json", "utf-8");
+    const categoriesData = fs.readFileSync("./data/categories.json", "utf-8");
     console.log("CC", categoriesData);
     const data = JSON.parse(categoriesData);
     console.log("DD", data);
@@ -33,7 +33,7 @@ router.get("/", (req, res) => {
 
 router.put("/:id", (req, res) => {
   try {
-    const categoriesData = fs.readFileSync("categories.json", "utf-8");
+    const categoriesData = fs.readFileSync("./data/categories.json", "utf-8");
     console.log("CC", categoriesData);
     const data = JSON.parse(categoriesData);
     console.log("DD", data);
@@ -50,7 +50,7 @@ router.put("/:id", (req, res) => {
       ...req.body,
     };
 
-    fs.writeFileSync("categories.json", JSON.stringify(data));
+    fs.writeFileSync("./data/categories.json", JSON.stringify(data));
     res
       .status(200)
       .json({ message: "success", data: data.categoriesData[findIndex] });
@@ -61,7 +61,7 @@ router.put("/:id", (req, res) => {
 
 router.delete("/:id", (req, res) => {
   try {
-    const categoriesData = fs.readFileSync("categories.json", "utf-8");
+    const categoriesData = fs.readFileSync("./data/categories.json", "utf-8");
     console.log("CC", categoriesData);
     const data = JSON.parse(categoriesData);
     console.log("DD", data);
@@ -76,7 +76,7 @@ router.delete("/:id", (req, res) => {
 
     data.categoriesData = findArr;
 
-    fs.writeFileSync("categories.json", JSON.stringify(data));
+    fs.writeFileSync("./data/categories.json", JSON.stringify(data));
     res.status(200).json({ message: "success", data: deletedCategory });
   } catch (error) {
     return res.status(400).json({ message: err.message });

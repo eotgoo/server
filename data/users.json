@@ -1,0 +1,10 @@
+{
+  "users": [
+    {
+      "id": "6b107964-2d34-4d6d-9307-d6c712e65263",
+      "role": "user",
+      "email": "bat@gmail.com",
+      "password": "$2b$10$P.F1wV5/HYHv/HVFlv/miOfqm3d4gszCX.ZwJb9wt1v6U04ZToYHu"
+    }
+  ]
+}
