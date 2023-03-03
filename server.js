@@ -47,8 +47,16 @@ server.get("/:id", async (req, res) => {
   );
 });
 server.put("/:id", async (req, res) => {
+  const body = req.body;
+  const convertToStr = (body) => {
+    const keys = Object.keys(body);
+    const db = keys.map((key) => `${key}='${body[key]}'`).join();
+    return db;
+  };
+  const updateQuery = convertToStr(body);
   connection.query(
-    `UPDATE azure_user SET name = "${req.body.name}" , last_name = "${req.body.last_name}"  WHERE aid=${req.params.id}`,
+    // `UPDATE azure_user SET name = "${req.body.name}" , last_name = "${req.body.last_name}"  WHERE aid=${req.params.id}`,
+    `UPDATE azure_user SET ${updateQuery} WHERE aid=${req.params.id}`,
     (err, result) => {
       if (err) {
         res.status(400).json({ message: err.message });
