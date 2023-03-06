@@ -2,6 +2,7 @@ const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcrypt");
 const filePath = "./data/users.json";
+const connection = require("./config/mysql");
 const getAllUsers = (req, res) => {
   fs.readFile(filePath, "utf-8", (err, data) => {
     if (err) {
