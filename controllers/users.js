@@ -3,6 +3,7 @@ const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcrypt");
 const filePath = "./data/users.json";
 const connection = require("../config/mysql");
+const { convertQueryStr } = require("../utils/convertQuery");
 
 const createUser = (req, res) => {
   const { name, email, password, phoneNumber } = req.body;
@@ -19,27 +20,36 @@ const createUser = (req, res) => {
         res.status(400).json({ error: err.message });
         return;
       }
-      res
-        .status(201)
-        .json({
-          message: "Шинэ хэрэглэгч амжилттай бүртгэгдлээ.",
-          data: result,
-        });
+      res.status(201).json({
+        message: "Шинэ хэрэглэгч амжилттай бүртгэгдлээ.",
+        data: result,
+      });
     }
   );
 };
-
 const getAllUsers = (req, res) => {
-  fs.readFile(filePath, "utf-8", (err, data) => {
+  const query = `SELECT * FROM user`;
+  connection.query(query, (err, result) => {
     if (err) {
-      console.log("Файл уншихад алдаа гарлаа. !!!");
+      res.status(400).json({ error: err.message });
       return;
     }
-    console.log(data);
-    const parsedData = JSON.parse(data);
-    res.status(201).json({ users: parsedData.users });
+    console.log(result);
+    res.status(200).json({ message: "amjilttai", data: result });
   });
 };
+
+// const getAllUsers = (req, result) => {
+//   fs.readFile(filePath, "utf-8", (err, data) => {
+//   if (err) {
+//     console.log("Файл уншихад алдаа гарлаа. !!!");
+//     return;
+//   }
+//   console.log(data);
+//   const parsedData = JSON.parse(data);
+//   res.status(201).json({ users: parsedData.users });
+//   });
+// };
 
 // const getUser = (req, res) => {
 //   const { id } = req.params;
@@ -114,9 +124,5 @@ const getAllUsers = (req, res) => {
 
 module.exports = {
   getAllUsers,
-  deleteUser,
-  getUser,
-  updateUser,
   createUser,
-  signIn,
 };

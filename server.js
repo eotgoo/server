@@ -15,7 +15,7 @@ server.use("/users", usersRoute);
 server.use("/categories", categoriesRoute);
 
 // server.get("/", async (req, res) => {
-//   connection.query(`SELECT * FROM azure_user`, (err, result) => {
+//   connection.query(`SELECT * FROM user`, (err, result) => {
 //     if (err) {
 //       res.status(400).json({ message: err.message });
 //       return;
