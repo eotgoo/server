@@ -4,7 +4,6 @@ const connection = mysql.createConnection({
   port: 3306,
   user: "root",
   password: "",
-  database: "azure_travel",
+  database: "travel_db",
 });
-
-module.exports = { connection };
+module.exports = connection;
