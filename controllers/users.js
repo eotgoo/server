@@ -1,11 +1,11 @@
 const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcrypt");
-const connection = require("../config/db");
+const connection = require("../config/mysql");
 
 const filePath = "./data/users.json";
 const getAllUsers = (req, res) => {
-  connection.query("SELECT * FROM users", (err, result, fields) => {
+  connection.query("SELECT * FROM user", (err, result, fields) => {
     if (err) {
       return res.status(400).json({ message: err.message });
     }
@@ -50,7 +50,7 @@ const createUser = (req, res) => {
 const getUser = (req, res) => {
   const { id } = req.params;
 
-  connection.query(`SELECT * FROM users WHERE id =  ${id}`, (err, result) => {
+  connection.query(`SELECT * FROM user WHERE id =  ${id}`, (err, result) => {
     if (err) {
       return res.status(400).json({ message: err.message });
     }
@@ -82,61 +82,61 @@ const getUser = (req, res) => {
 //   fs.writeFileSync(filePath, JSON.stringify(parsedData));
 //   res.status(201).json({ message: "Шинэ хэрэглэгчийг амжилттай бүртгэлээ." });
 // };
-const updateUser = (req, res) => {
-  const { id } = req.params;
-  const body = req.body;
-  const convertToStr = (body) => {
-    const keys = Object.keys(body);
-    const a = keys.map((key) => `${key}='${body[key]}'`).join();
-    return a;
-  };
-  const updateQuery = convertToStr(body);
-  connection.query(
-    `UPDATE users SET ${updateQuery} WHERE id = ${id}`,
-    (err, result, fieldsz) => {
-      if (err) {
-        return res.status(400).json({ message: err.message });
-      }
-      res.status(201).json({
-        message: "Шинэ хэрэглэгчийн өгөгдөл амжилттай солигдлоо." + id,
-        data: result,
-      });
-    }
-  );
-  // const { id } = req.params;
-  // const { name } = req.body;
-  // const data = fs.readFileSync(filePath, "utf-8");
-  // const parsedData = JSON.parse(data);
-  // const findIndex = parsedData.users.findIndex((el) => el.id === id);
-  // parsedData.users[findIndex].name = name;
-  // fs.writeFileSync(filePath, JSON.stringify(parsedData));
-  // res
-  //   .status(201)
-  //   .json({ message: "Шинэ хэрэглэгчийн өгөгдөл амжилттай солигдлоо." });
-};
-const deleteUser = (req, res) => {
-  // const { id } = req.params;
-  // const data = fs.readFileSync(filePath, "utf-8");
-  // const parsedData = JSON.parse(data);
-  // const findIndex = parsedData.users.findIndex((el) => el.id === id);
-  // parsedData.users.splice(findIndex, 1);
-  // fs.writeFileSync(filePath, JSON.stringify(parsedData));
-  // res
-  //   .status(201)
-  //   .json({ message: `${id} тай хэрэглэгч амжилттай устгагдлаа.` });
-  const { id } = req.params;
-  connection.query(
-    `DELETE FROM users WHERE id =${id} `,
-    (err, result, fields) => {
-      if (err) {
-        res.status(400).json({ message: err.message });
-      }
-      res
-        .status(201)
-        .json({ message: `${id} тай хэрэглэгч амжилттай устгагдлаа.` });
-    }
-  );
-};
+// const updateUser = (req, res) => {
+//   const { id } = req.params;
+//   const body = req.body;
+//   const convertToStr = (body) => {
+//     const keys = Object.keys(body);
+//     const a = keys.map((key) => `${key}='${body[key]}'`).join();
+//     return a;
+//   };
+//   const updateQuery = convertToStr(body);
+//   connection.query(
+//     `UPDATE user SET ${updateQuery} WHERE id = ${id}`,
+//     (err, result, fieldsz) => {
+//       if (err) {
+//         return res.status(400).json({ message: err.message });
+//       }
+//       res.status(201).json({
+//         message: "Шинэ хэрэглэгчийн өгөгдөл амжилттай солигдлоо." + id,
+//         data: result,
+//       });
+//     }
+//   );
+// const { id } = req.params;
+// const { name } = req.body;
+// const data = fs.readFileSync(filePath, "utf-8");
+// const parsedData = JSON.parse(data);
+// const findIndex = parsedData.users.findIndex((el) => el.id === id);
+// parsedData.users[findIndex].name = name;
+// fs.writeFileSync(filePath, JSON.stringify(parsedData));
+// res
+//   .status(201)
+//   .json({ message: "Шинэ хэрэглэгчийн өгөгдөл амжилттай солигдлоо." });
+// };
+// const deleteUser = (req, res) => {
+//   // const { id } = req.params;
+//   // const data = fs.readFileSync(filePath, "utf-8");
+//   // const parsedData = JSON.parse(data);
+//   // const findIndex = parsedData.users.findIndex((el) => el.id === id);
+//   // parsedData.users.splice(findIndex, 1);
+//   // fs.writeFileSync(filePath, JSON.stringify(parsedData));
+//   // res
+//   //   .status(201)
+//   //   .json({ message: `${id} тай хэрэглэгч амжилттай устгагдлаа.` });
+//   const { id } = req.params;
+//   connection.query(
+//     `DELETE FROM users WHERE id =${id} `,
+//     (err, result, fields) => {
+//       if (err) {
+//         res.status(400).json({ message: err.message });
+//       }
+//       res
+//         .status(201)
+//         .json({ message: `${id} тай хэрэглэгч амжилттай устгагдлаа.` });
+//     }
+//   );
+// };
 
 // const signIn = (req, res) => {
 //   const { email, password } = req.body;
@@ -161,7 +161,7 @@ const deleteUser = (req, res) => {
 module.exports = {
   getAllUsers,
   createUser,
-  deleteUser,
-  updateUser,
+  // deleteUser,
+  // updateUser,
   getUser,
 };

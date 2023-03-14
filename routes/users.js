@@ -4,12 +4,13 @@ const router = Router();
 const {
   getAllUsers,
   getUser,
-  deleteUser,
-  updateUser,
+  // deleteUser,
+  // updateUser,
   createUser,
 } = require("../controllers/users");
 router.post("/signup", createUser);
 router.get("/", getAllUsers);
-router.get("/:id", getUser).put("/:id", updateUser).delete("/:id", deleteUser);
+router.get("/:id", getUser);
+// router.put("/:id", updateUser).delete("/:id", deleteUser);
 
 module.exports = router;
